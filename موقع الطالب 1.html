@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aethon University — Where Minds Shape Tomorrow</title>
+<meta name="description" content="Aethon University — A world-class institution dedicated to excellence in research, innovation, and education.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN SYSTEM — Brutalist-Luxury Academic
+   Deep Navy · Antique Gold · Cream White
+   Fonts: Cormorant Garamond + DM Sans
+══════════════════════════════════════════ */
+:root {
+  --navy:    #050D1A;
+  --navy2:   #0A1628;
+  --navy3:   #0F1F3D;
+  --gold:    #C9A84C;
+  --gold2:   #E8C97A;
+  --gold3:   #F5E4A8;
+  --cream:   #FAF6EE;
+  --text:    #EDE8DE;
+  --muted:   #8A8A7A;
+  --border:  rgba(201,168,76,0.18);
+  --border2: rgba(255,255,255,0.07);
+  --card-bg: rgba(15,31,61,0.7);
+  --glass:   rgba(5,13,26,0.85);
+  --shadow:  0 8px 40px rgba(0,0,0,0.5);
+  --shadow2: 0 24px 80px rgba(0,0,0,0.7);
+  --r:       3px;
+  --r2:      8px;
+  --transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'Bebas Neue', sans-serif;
+}
+[data-theme="light"] {
+  --navy:    #FAF6EE;
+  --navy2:   #F0EAD9;
+  --navy3:   #E4D9C4;
+  --text:    #0A1628;
+  --muted:   #5A5A4A;
+  --border:  rgba(10,22,40,0.15);
+  --border2: rgba(10,22,40,0.08);
+  --card-bg: rgba(255,255,255,0.8);
+  --glass:   rgba(250,246,238,0.9);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--font-body);
+  background:var(--navy);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+  transition:background 0.5s ease,color 0.5s ease;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:none;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+
+/* ══════════════ CUSTOM CURSOR ══════════════ */
+#cursor {
+  position:fixed;width:12px;height:12px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s,opacity 0.3s;
+  mix-blend-mode:difference;
+}
+#cursor-ring {
+  position:fixed;width:40px;height:40px;
+  border:1.5px solid var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.15s ease,width 0.3s,height 0.3s,opacity 0.3s;
+  opacity:0.5;
+}
+#cursor.active{transform:translate(-50%,-50%) scale(0.5)}
+#cursor-ring.active{width:60px;height:60px;opacity:0.3}
+
+/* ══════════════ GRAIN OVERLAY ══════════════ */
+body::before {
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.4;
+}
+
+/* ══════════════ PROGRESS BAR ══════════════ */
+#progress{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  width:0%;z-index:10000;transition:width 0.1s linear;
+}
+
+/* ══════════════ NAVBAR ══════════════ */
+nav {
+  position:fixed;top:0;left:0;right:0;
+  z-index:1000;
+  display:flex;align-items:center;
+  padding:0 48px;height:80px;
+  border-bottom:1px solid transparent;
+  transition:var(--transition);
+}
+nav.scrolled {
+  background:var(--glass);
+  border-bottom-color:var(--border);
+  backdrop-filter:blur(24px);
+  height:64px;
+}
+.nav-logo {
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--font-display);
+  font-size:20px;font-weight:700;
+  letter-spacing:0.5px;
+}
+.logo-emblem {
+  width:44px;height:44px;
+  border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  background:var(--navy2);
+}
+.logo-emblem::before {
+  content:'Æ';
+  font-family:var(--font-display);
+  font-size:18px;font-weight:700;
+  color:var(--gold);
+}
+.nav-links {
+  display:flex;align-items:center;gap:2px;
+  margin:0 auto;
+}
+.nav-link {
+  padding:8px 18px;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:0.8px;
+  text-transform:uppercase;
+  color:rgba(237,232,222,0.65);
+  border-radius:var(--r);
+  transition:var(--transition);
+  position:relative;
+  cursor:none;
+}
+.nav-link::after {
+  content:'';
+  position:absolute;bottom:4px;left:18px;right:18px;
+  height:1px;background:var(--gold);
+  transform:scaleX(0);transition:transform 0.3s ease;
+  transform-origin:left;
+}
+.nav-link:hover,
+.nav-link.active {
+  color:var(--gold2);
+}
+.nav-link:hover::after,
+.nav-link.active::after { transform:scaleX(1); }
+
+.nav-right { display:flex;align-items:center;gap:12px; }
+.btn-apply {
+  background:var(--gold);
+  color:var(--navy);
+  padding:10px 24px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  border-radius:var(--r);
+  transition:var(--transition);
+  cursor:none;
+}
+.btn-apply:hover {
+  background:var(--gold2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(201,168,76,0.4);
+}
+.nav-theme {
+  width:36px;height:36px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:14px;
+  transition:var(--transition);cursor:none;
+}
+.nav-theme:hover { border-color:var(--gold);color:var(--gold); }
+.hamburger-btn {
+  display:none;flex-direction:column;gap:5px;padding:8px;cursor:none;
+}
+.hamburger-btn span {
+  width:22px;height:1.5px;
+  background:var(--text);border-radius:2px;
+  transition:var(--transition);
+}
+.hamburger-btn.open span:nth-child(1){transform:rotate(45deg)translate(4px,4px)}
+.hamburger-btn.open span:nth-child(2){opacity:0}
+.hamburger-btn.open span:nth-child(3){transform:rotate(-45deg)translate(4px,-4px)}
+
+/* ══════════════ PAGE SYSTEM ══════════════ */
+.page{display:none}
+.page.active{display:block;animation:pageIn 0.5s cubic-bezier(0.4,0,0.2,1)}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════ HERO ══════════════ */
+.hero {
+  min-height:100vh;
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:80px 0 0;
+}
+.hero-bg {
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(15,31,61,0) 0%, var(--navy) 70%),
+    url('https://picsum.photos/seed/campus-grand/1600/900') center/cover no-repeat;
+  filter:brightness(0.35);
+}
+.hero-geo {
+  position:absolute;inset:0;
+  background:
+    linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 50%),
+    linear-gradient(to bottom, var(--navy) 0%, transparent 30%, transparent 70%, var(--navy) 100%);
+}
+/* Geometric lines */
+.hero-lines {
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+}
+.hero-lines::before {
+  content:'';position:absolute;
+  top:-200px;right:-200px;
+  width:600px;height:600px;
+  border:1px solid rgba(201,168,76,0.08);
+  border-radius:50%;
+  animation:rotate-slow 40s linear infinite;
+}
+.hero-lines::after {
+  content:'';position:absolute;
+  top:-100px;right:-100px;
+  width:400px;height:400px;
+  border:1px solid rgba(201,168,76,0.12);
+  border-radius:50%;
+  animation:rotate-slow 25s linear infinite reverse;
+}
+@keyframes rotate-slow{to{transform:rotate(360deg)}}
+
+.hero-content {
+  position:relative;
+  max-width:1400px;margin:0 auto;padding:0 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.hero-left{}
+.hero-tag {
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--gold);
+  padding:7px 18px;
+  font-size:11px;font-weight:500;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:32px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-tag::before {
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(201,168,76,0.05);
+}
+.hero-tag-dot {
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+  animation:blink 2s ease infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-title {
+  font-family:var(--font-display);
+  font-size:clamp(52px,5.5vw,88px);
+  font-weight:300;
+  line-height:1.0;
+  letter-spacing:-1px;
+  margin-bottom:8px;
+  color:var(--cream);
+}
+.hero-title em {
+  font-style:italic;
+  color:var(--gold2);
+  display:block;
+}
+.hero-title strong {
+  font-weight:700;
+  display:block;
+}
+.hero-subtitle {
+  font-size:16px;color:var(--muted);
+  line-height:1.8;max-width:500px;
+  margin:28px 0 40px;font-weight:300;
+}
+.hero-cta {display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn-primary {
+  background:var(--gold);color:var(--navy);
+  padding:14px 36px;
+  font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  border-radius:var(--r);transition:var(--transition);cursor:none;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before {
+  content:'';position:absolute;inset:0;
+  background:rgba(255,255,255,0.15);
+  transform:translateX(-100%);transition:transform 0.4s ease;
+}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(201,168,76,0.5)}
+.btn-ghost {
+  padding:14px 36px;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  border:1px solid rgba(237,232,222,0.25);color:var(--text);
+  border-radius:var(--r);transition:var(--transition);cursor:none;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-3px)}
+.hero-nums {
+  display:flex;gap:40px;margin-top:56px;padding-top:40px;
+  border-top:1px solid var(--border2);
+}
+.hero-num-item{}
+.hero-num-val {
+  font-family:var(--font-display);
+  font-size:42px;font-weight:600;color:var(--gold2);
+  line-height:1;
+}
+.hero-num-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* Hero right — image stack */
+.hero-right {
+  position:relative;display:flex;flex-direction:column;gap:20px;
+  align-items:flex-end;
+}
+.hero-img-main {
+  width:100%;max-width:460px;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:var(--r2);
+  box-shadow:var(--shadow2);
+  filter:brightness(0.85) saturate(0.8);
+  border:1px solid var(--border);
+  animation:float-up 6s ease infinite;
+}
+@keyframes float-up{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-img-card {
+  position:absolute;
+  bottom:-20px;left:-20px;
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:20px 24px;
+  display:flex;gap:14px;align-items:center;
+  box-shadow:var(--shadow);
+  min-width:240px;
+}
+.hero-card-icon {
+  width:44px;height:44px;
+  background:rgba(201,168,76,0.12);
+  border:1px solid var(--gold);
+  border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--gold);flex-shrink:0;
+}
+.hero-card-val{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--cream);line-height:1}
+.hero-card-label{font-size:11px;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.hero-rank-badge {
+  position:absolute;top:20px;right:0;
+  background:var(--gold);
+  color:var(--navy);
+  padding:10px 18px;
+  border-radius:var(--r) 0 0 var(--r);
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  box-shadow:0 4px 16px rgba(201,168,76,0.4);
+}
+
+/* ══════════════ CONTAINER ══════════════ */
+.container{max-width:1400px;margin:0 auto;padding:0 48px}
+.container-sm{max-width:900px;margin:0 auto;padding:0 48px}
+
+/* ══════════════ SECTION BASE ══════════════ */
+.section{padding:100px 0}
+.section-sm{padding:60px 0}
+.section-label {
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+  margin-bottom:20px;
+}
+.section-label::before,
+.section-label::after {
+  content:'';flex:0 0 40px;height:1px;background:var(--gold);opacity:0.5;
+}
+.section-title {
+  font-family:var(--font-display);
+  font-size:clamp(36px,4vw,60px);
+  font-weight:300;line-height:1.1;
+  letter-spacing:-0.5px;color:var(--cream);
+  margin-bottom:20px;
+}
+.section-title em{font-style:italic;color:var(--gold2)}
+.section-body {
+  font-size:15px;color:var(--muted);
+  line-height:1.85;max-width:560px;font-weight:300;
+}
+
+/* ══════════════ DIVIDER ══════════════ */
+.divider {
+  border:none;
+  border-top:1px solid var(--border2);
+  margin:0;
+}
+
+/* ══════════════ ABOUT STRIP ══════════════ */
+.about-strip {
+  background:var(--navy2);
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  padding:28px 0;
+  overflow:hidden;
+}
+.strip-track {
+  display:flex;gap:80px;width:max-content;
+  animation:strip-scroll 30s linear infinite;
+}
+.strip-track:hover{animation-play-state:paused}
+.strip-item {
+  display:flex;align-items:center;gap:12px;
+  white-space:nowrap;font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);
+}
+.strip-item i{color:var(--gold);font-size:14px}
+@keyframes strip-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════ ACADEMICS ══════════════ */
+.academics-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  overflow:hidden;
+  margin-top:64px;
+}
+.acad-card {
+  background:var(--navy2);
+  padding:48px 40px;
+  position:relative;overflow:hidden;
+  transition:var(--transition);
+  cursor:none;
+}
+.acad-card::before {
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);transition:transform 0.5s ease;
+}
+.acad-card:hover{background:var(--navy3)}
+.acad-card:hover::before{transform:scaleX(1)}
+.acad-num {
+  font-family:var(--font-mono);
+  font-size:80px;color:rgba(201,168,76,0.06);
+  line-height:1;position:absolute;top:20px;right:24px;
+  letter-spacing:-4px;
+}
+.acad-icon {
+  width:52px;height:52px;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--gold);
+  margin-bottom:24px;
+  transition:var(--transition);
+  background:rgba(201,168,76,0.05);
+}
+.acad-card:hover .acad-icon{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.acad-title {
+  font-family:var(--font-display);
+  font-size:24px;font-weight:600;
+  color:var(--cream);margin-bottom:12px;
+  line-height:1.3;
+}
+.acad-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;font-weight:300}
+.acad-programs {
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-bottom:28px;
+}
+.prog-tag {
+  padding:4px 12px;
+  border:1px solid var(--border);
+  border-radius:2px;
+  font-size:11px;letter-spacing:0.5px;
+  color:var(--muted);transition:var(--transition);
+}
+.acad-card:hover .prog-tag{border-color:rgba(201,168,76,0.3);color:var(--gold3)}
+.acad-link {
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+  transition:var(--transition);cursor:none;
+}
+.acad-link:hover{gap:14px}
+
+/* ══════════════ STATS BAND ══════════════ */
+.stats-band {
+  background:linear-gradient(135deg,var(--navy2),var(--navy3));
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  padding:80px 0;
+}
+.stats-grid {
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+  border:1px solid var(--border2);
+  border-radius:var(--r2);overflow:hidden;
+}
+.stat-cell {
+  padding:48px;text-align:center;
+  border-right:1px solid var(--border2);
+  position:relative;overflow:hidden;
+  transition:var(--transition);
+}
+.stat-cell:last-child{border-right:none}
+.stat-cell::before {
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(circle at center,rgba(201,168,76,0.05),transparent 70%);
+  opacity:0;transition:opacity 0.4s;
+}
+.stat-cell:hover::before{opacity:1}
+.stat-val {
+  font-family:var(--font-display);
+  font-size:56px;font-weight:600;color:var(--gold2);
+  line-height:1;margin-bottom:8px;
+}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.stat-desc{font-size:13px;color:var(--muted);margin-top:8px;font-weight:300}
+
+/* ══════════════ CAMPUS GRID ══════════════ */
+.campus-grid {
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  grid-template-rows:300px 300px;
+  gap:12px;
+  margin-top:64px;
+}
+.campus-img {
+  position:relative;overflow:hidden;border-radius:var(--r2);cursor:none;
+}
+.campus-img:first-child{grid-row:span 2}
+.campus-img img {
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(0.7) saturate(0.7);
+  transition:transform 0.7s ease,filter 0.5s;
+}
+.campus-img:hover img{transform:scale(1.06);filter:brightness(0.85) saturate(0.9)}
+.campus-img-label {
+  position:absolute;bottom:16px;left:16px;
+  background:var(--glass);backdrop-filter:blur(12px);
+  border:1px solid var(--border);
+  padding:8px 16px;border-radius:var(--r);
+  font-size:12px;letter-spacing:0.8px;color:var(--cream);
+  opacity:0;transform:translateY(8px);transition:var(--transition);
+}
+.campus-img:hover .campus-img-label{opacity:1;transform:translateY(0)}
+
+/* ══════════════ EVENTS ══════════════ */
+.events-layout {
+  display:grid;grid-template-columns:1fr 380px;gap:64px;
+  margin-top:64px;align-items:start;
+}
+.events-list{display:flex;flex-direction:column;gap:0}
+.event-item {
+  display:flex;gap:32px;align-items:flex-start;
+  padding:32px 0;
+  border-bottom:1px solid var(--border2);
+  transition:var(--transition);cursor:none;
+  position:relative;
+}
+.event-item::before {
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--gold);transform:scaleY(0);transition:transform 0.4s ease;
+  transform-origin:top;
+}
+.event-item:hover{padding-left:20px}
+.event-item:hover::before{transform:scaleY(1)}
+.event-item:first-child{border-top:1px solid var(--border2)}
+.event-date {
+  flex-shrink:0;width:56px;text-align:center;
+}
+.event-day {
+  font-family:var(--font-display);
+  font-size:40px;font-weight:600;color:var(--gold);line-height:1;
+}
+.event-month{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.event-info{}
+.event-type {
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.event-title{font-family:var(--font-display);font-size:22px;font-weight:500;color:var(--cream);margin-bottom:6px;line-height:1.3}
+.event-meta{font-size:13px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap}
+.event-meta span{display:flex;align-items:center;gap:5px}
+
+/* Events sidebar */
+.events-sidebar{}
+.news-card {
+  background:var(--card-bg);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  overflow:hidden;
+  margin-bottom:20px;
+  transition:var(--transition);cursor:none;
+}
+.news-card:hover{border-color:var(--border);transform:translateY(-4px);box-shadow:var(--shadow)}
+.news-card-img{height:180px;overflow:hidden}
+.news-card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8)saturate(0.7);transition:transform 0.5s}
+.news-card:hover .news-card-img img{transform:scale(1.05)}
+.news-card-body{padding:20px}
+.news-card-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.news-card-title{font-family:var(--font-display);font-size:18px;font-weight:500;color:var(--cream);line-height:1.4;margin-bottom:8px}
+.news-card-date{font-size:12px;color:var(--muted)}
+
+/* ══════════════ FACULTY ══════════════ */
+.faculty-grid {
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  margin-top:64px;
+}
+.faculty-card {
+  position:relative;overflow:hidden;
+  border-radius:var(--r2);
+  aspect-ratio:3/4;
+  cursor:none;
+  border:1px solid var(--border2);
+}
+.faculty-card img {
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(50%) brightness(0.75);
+  transition:transform 0.6s ease,filter 0.5s;
+}
+.faculty-card:hover img{transform:scale(1.06);filter:grayscale(0) brightness(0.85)}
+.faculty-overlay {
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,13,26,0.95) 0%,rgba(5,13,26,0.3) 50%,transparent 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:28px 24px;
+}
+.faculty-dept {
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:6px;opacity:0;transform:translateY(8px);transition:var(--transition);
+}
+.faculty-card:hover .faculty-dept{opacity:1;transform:translateY(0)}
+.faculty-name{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:4px}
+.faculty-role{font-size:12px;color:var(--muted);margin-bottom:12px}
+.faculty-tags{display:flex;gap:6px;flex-wrap:wrap;opacity:0;transform:translateY(8px);transition:var(--transition) 0.05s}
+.faculty-card:hover .faculty-tags{opacity:1;transform:translateY(0)}
+.faculty-tag{padding:3px 10px;border:1px solid rgba(201,168,76,0.3);border-radius:2px;font-size:10px;color:var(--gold3);letter-spacing:0.5px}
+
+/* ══════════════ TESTIMONIALS ══════════════ */
+.testimonials-section{
+  background:var(--navy2);
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+}
+.testimonials-swiper{margin-top:64px}
+.testimonial-slide {
+  background:var(--navy3);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  padding:48px;position:relative;
+  height:auto;
+}
+.quote-mark {
+  font-family:var(--font-display);
+  font-size:120px;color:rgba(201,168,76,0.08);
+  line-height:0.7;position:absolute;top:32px;left:32px;
+  pointer-events:none;
+}
+.testimonial-text {
+  font-family:var(--font-display);
+  font-size:clamp(18px,2vw,24px);
+  font-style:italic;
+  color:var(--cream);
+  line-height:1.7;font-weight:300;
+  margin-bottom:32px;position:relative;
+}
+.testimonial-author{display:flex;align-items:center;gap:16px}
+.testimonial-avatar {
+  width:52px;height:52px;border-radius:50%;
+  object-fit:cover;filter:grayscale(30%);
+  border:2px solid var(--border);
+}
+.testimonial-name{font-weight:600;font-size:15px;color:var(--cream);margin-bottom:2px}
+.testimonial-role{font-size:12px;color:var(--gold);letter-spacing:0.5px}
+.testimonials-swiper .swiper-pagination-bullet{background:var(--muted)}
+.testimonials-swiper .swiper-pagination-bullet-active{background:var(--gold);width:24px;border-radius:2px}
+
+/* ══════════════ ADMISSIONS ══════════════ */
+.admissions-layout {
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;
+  margin-top:64px;
+}
+.admissions-info {padding:60px}
+.admissions-info h2{font-family:var(--font-display);font-size:44px;font-weight:300;color:var(--cream);margin-bottom:20px;line-height:1.2}
+.admissions-info h2 em{font-style:italic;color:var(--gold2)}
+.admissions-info p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:32px;font-weight:300}
+.admissions-steps{display:flex;flex-direction:column;gap:0}
+.adm-step {
+  display:flex;gap:20px;align-items:flex-start;
+  padding:20px 0;
+  border-bottom:1px solid var(--border2);
+}
+.adm-step:last-child{border-bottom:none}
+.adm-step-num {
+  width:36px;height:36px;flex-shrink:0;
+  border:1px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--gold);
+}
+.adm-step-title{font-size:15px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.adm-step-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.admissions-form {
+  background:var(--navy3);
+  padding:60px;
+  border-left:1px solid var(--border2);
+}
+.admissions-form h3{font-family:var(--font-display);font-size:28px;font-weight:500;color:var(--cream);margin-bottom:32px}
+.form-group{margin-bottom:20px}
+.form-label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.form-input {
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border2);
+  border-radius:var(--r);
+  padding:12px 16px;
+  color:var(--text);font-family:inherit;font-size:14px;
+  outline:none;transition:var(--transition);
+}
+.form-input:focus{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.form-input::placeholder{color:var(--muted)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8A7A' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center}
+.btn-form {
+  width:100%;
+  background:var(--gold);color:var(--navy);
+  padding:14px;
+  font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  border-radius:var(--r);transition:var(--transition);cursor:none;margin-top:8px;
+}
+.btn-form:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.4)}
+.form-success {
+  display:none;text-align:center;padding:40px;
+}
+.form-success.show{display:block;animation:pageIn 0.5s ease}
+.form-success-icon{font-size:48px;color:var(--gold);margin-bottom:16px}
+.form-success h3{font-family:var(--font-display);font-size:28px;color:var(--cream);margin-bottom:8px}
+.form-success p{font-size:14px;color:var(--muted)}
+
+/* ══════════════ RESEARCH ══════════════ */
+.research-grid {
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+  margin-top:64px;
+}
+.research-card {
+  background:var(--navy2);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  padding:40px;
+  position:relative;overflow:hidden;
+  transition:var(--transition);cursor:none;
+}
+.research-card:hover{border-color:var(--border);transform:translateY(-4px);box-shadow:var(--shadow)}
+.research-accent {
+  position:absolute;top:0;left:0;
+  width:3px;height:0;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  transition:height 0.5s ease;
+}
+.research-card:hover .research-accent{height:100%}
+.research-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.research-title{font-family:var(--font-display);font-size:26px;font-weight:500;color:var(--cream);line-height:1.3;margin-bottom:14px}
+.research-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;font-weight:300}
+.research-meta{display:flex;gap:20px;padding-top:20px;border-top:1px solid var(--border2)}
+.r-meta-item{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.r-meta-val{font-size:16px;font-weight:600;color:var(--cream)}
+
+/* ══════════════ FOOTER ══════════════ */
+footer {
+  background:var(--navy2);
+  border-top:1px solid var(--border2);
+  padding:80px 0 0;
+}
+.footer-grid {
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;
+  margin-bottom:60px;
+}
+.footer-brand{}
+.footer-logo{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--cream);margin-bottom:16px}
+.footer-logo em{font-style:italic;color:var(--gold2)}
+.footer-tagline{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:24px;font-weight:300}
+.footer-social{display:flex;gap:10px}
+.footer-social a {
+  width:38px;height:38px;
+  border:1px solid var(--border2);border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:var(--muted);transition:var(--transition);cursor:none;
+}
+.footer-social a:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+.footer-col h5{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:14px;color:var(--muted);transition:color 0.2s;cursor:none;display:flex;align-items:center;gap:8px}
+.footer-links a::before{content:'—';font-size:10px;color:var(--border);transition:color 0.2s}
+.footer-links a:hover{color:var(--cream)}
+.footer-links a:hover::before{color:var(--gold)}
+.footer-bottom {
+  border-top:1px solid var(--border2);
+  padding:24px 0;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--muted);letter-spacing:0.5px;
+}
+.footer-accreditations{display:flex;gap:24px;align-items:center}
+.accred-badge {
+  padding:6px 14px;border:1px solid var(--border2);border-radius:var(--r);
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);
+}
+
+/* ══════════════ BACK TO TOP ══════════════ */
+#back-top {
+  position:fixed;bottom:32px;right:32px;
+  width:44px;height:44px;
+  border:1px solid var(--gold);border-radius:var(--r);
+  background:var(--glass);backdrop-filter:blur(12px);
+  color:var(--gold);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transition:var(--transition);z-index:999;cursor:none;
+}
+#back-top.show{opacity:1;visibility:visible}
+#back-top:hover{background:var(--gold);color:var(--navy);transform:translateY(-4px)}
+
+/* ══════════════ MOBILE MENU ══════════════ */
+.mobile-drawer {
+  position:fixed;top:0;right:-100%;
+  width:90%;max-width:360px;height:100%;
+  background:var(--navy2);
+  border-left:1px solid var(--border);
+  z-index:2000;padding:28px;
+  transition:right 0.4s cubic-bezier(0.4,0,0.2,1);
+  overflow-y:auto;
+}
+.mobile-drawer.open{right:0}
+.mobile-overlay {
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  z-index:1999;opacity:0;visibility:hidden;
+  transition:var(--transition);backdrop-filter:blur(6px);
+}
+.mobile-overlay.show{opacity:1;visibility:visible}
+.mobile-drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--border2)}
+.mobile-close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border2);border-radius:var(--r);color:var(--muted);font-size:16px;transition:var(--transition);cursor:none}
+.mobile-close:hover{border-color:var(--gold);color:var(--gold)}
+.mobile-links{display:flex;flex-direction:column;gap:4px}
+.mobile-link{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:var(--r);font-size:15px;font-weight:400;color:var(--muted);transition:var(--transition);cursor:none;letter-spacing:0.5px}
+.mobile-link:hover,.mobile-link.active{background:rgba(201,168,76,0.08);color:var(--gold)}
+.mobile-apply{width:100%;background:var(--gold);color:var(--navy);padding:14px;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border-radius:var(--r);margin-top:24px;transition:var(--transition);cursor:none}
+.mobile-apply:hover{background:var(--gold2)}
+
+/* ══════════════ PAGE HEADERS ══════════════ */
+.page-header {
+  padding:140px 0 80px;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border2);
+}
+.page-header::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%,rgba(201,168,76,0.04),transparent),
+    var(--navy);
+}
+.page-header-num {
+  font-family:var(--font-mono);
+  font-size:200px;color:rgba(201,168,76,0.03);
+  line-height:1;position:absolute;right:48px;top:50%;
+  transform:translateY(-50%);letter-spacing:-10px;
+  pointer-events:none;
+}
+.page-header-content{position:relative}
+.breadcrumb{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.breadcrumb span{cursor:none;transition:color 0.2s}
+.breadcrumb span:hover{color:var(--gold)}
+.breadcrumb i{font-size:9px;color:var(--border)}
+
+/* ══════════════ ANIMATIONS ══════════════ */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.slide-left{opacity:0;transform:translateX(-24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.slide-left.visible{opacity:1;transform:translateX(0)}
+.slide-right{opacity:0;transform:translateX(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.slide-right.visible{opacity:1;transform:translateX(0)}
+/* stagger delays */
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}
+.delay-4{transition-delay:0.4s}.delay-5{transition-delay:0.5s}
+
+/* ══════════════ RESPONSIVE ══════════════ */
+@media(max-width:1100px){
+  .hero-content{grid-template-columns:1fr;gap:48px}
+  .hero-right{display:none}
+  .admissions-layout{grid-template-columns:1fr}
+  .admissions-form{border-left:none;border-top:1px solid var(--border2)}
+  .faculty-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .events-layout{grid-template-columns:1fr}
+  .research-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav-links,.nav-right .btn-apply,.nav-right .nav-theme{display:none}
+  .hamburger-btn{display:flex}
+  .container{padding:0 24px}
+  nav{padding:0 24px}
+  .hero-content{padding:0 24px}
+  .academics-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-cell:nth-child(2){border-right:none}
+  .stat-cell:nth-child(3){border-top:1px solid var(--border2)}
+  .campus-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .campus-img:first-child{grid-column:span 2;grid-row:span 1}
+  .faculty-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .hero-nums{gap:24px}
+  .page-header{padding:110px 0 60px}
+  .section{padding:64px 0}
+  body{cursor:auto}
+  #cursor,#cursor-ring{display:none}
+}
+@media(max-width:480px){
+  .faculty-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .stat-cell{border-right:none;border-bottom:1px solid var(--border2)}
+  .form-row{grid-template-columns:1fr}
+}
+
+/* ══════════════ LIGHT MODE OVERRIDES ══════════════ */
+[data-theme="light"] .hero-bg{filter:brightness(0.25)}
+[data-theme="light"] .acad-card{background:var(--navy2)}
+[data-theme="light"] .stats-band{background:linear-gradient(135deg,var(--navy2),var(--navy3))}
+[data-theme="light"] .testimonials-section{background:var(--navy2)}
+[data-theme="light"] .footer{background:var(--navy3)}
+[data-theme="light"] .stat-val,[data-theme="light"] .hero-num-val{color:#7A5C0F}
+[data-theme="light"] .hero-tag,[data-theme="light"] .gold-text{color:#7A5C0F}
+[data-theme="light"] .section-title{color:var(--navy2)}
+[data-theme="light"] .hero-title{color:var(--cream)}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Progress -->
+<div id="progress"></div>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="navigate('home')" style="cursor:none;">
+    <div class="logo-emblem"></div>
+    <div>
+      <div style="line-height:1.1;">Aethon <em style="font-style:italic;color:var(--gold2);">University</em></div>
+      <div style="font-size:9px;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase;font-family:var(--font-body);font-weight:400;margin-top:2px;">Est. 1892</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <span class="nav-link active" id="nav-home" onclick="navigate('home')">Home</span>
+    <span class="nav-link" id="nav-academics" onclick="navigate('academics')">Academics</span>
+    <span class="nav-link" id="nav-research" onclick="navigate('research')">Research</span>
+    <span class="nav-link" id="nav-campus" onclick="navigate('campus')">Campus Life</span>
+    <span class="nav-link" id="nav-admissions" onclick="navigate('admissions')">Admissions</span>
+    <span class="nav-link" id="nav-about" onclick="navigate('about')">About</span>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-theme" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-circle-half-stroke" id="theme-icon"></i></button>
+    <button class="btn-apply" onclick="navigate('admissions')">Apply Now</button>
+    <button class="hamburger-btn" id="ham" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-overlay" id="mob-overlay" onclick="toggleDrawer()"></div>
+<div class="mobile-drawer" id="mob-drawer">
+  <div class="mobile-drawer-header">
+    <div class="nav-logo"><div class="logo-emblem"></div><span style="font-family:var(--font-display);font-size:18px;">Aethon <em style="color:var(--gold2);">University</em></span></div>
+    <button class="mobile-close" onclick="toggleDrawer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-links">
+    <span class="mobile-link active" onclick="navigate('home');toggleDrawer()">Home <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.4;"></i></span>
+    <span class="mobile-link" onclick="navigate('academics');toggleDrawer()">Academics <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.4;"></i></span>
+    <span class="mobile-link" onclick="navigate('research');toggleDrawer()">Research <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.4;"></i></span>
+    <span class="mobile-link" onclick="navigate('campus');toggleDrawer()">Campus Life <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.4;"></i></span>
+    <span class="mobile-link" onclick="navigate('admissions');toggleDrawer()">Admissions <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.4;"></i></span>
+    <span class="mobile-link" onclick="navigate('about');toggleDrawer()">About <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.4;"></i></span>
+  </div>
+  <button class="mobile-apply" onclick="navigate('admissions');toggleDrawer()">Apply Now →</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-geo"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-tag fade-in visible">
+          <div class="hero-tag-dot"></div>
+          Ranked #7 Globally · 2025 QS World Rankings
+        </div>
+        <h1 class="hero-title fade-in visible delay-1">
+          Where
+          <em>Brilliant</em>
+          <strong>Minds</strong>
+        </h1>
+        <p class="hero-subtitle fade-in visible delay-2">Aethon University has been shaping the world's most impactful leaders, scientists, and thinkers since 1892. Join a legacy of intellectual courage and transformative discovery.</p>
+        <div class="hero-cta fade-in visible delay-3">
+          <button class="btn-primary" onclick="navigate('admissions')">Begin Your Journey</button>
+          <button class="btn-ghost" onclick="navigate('about')">Explore Aethon ↗</button>
+        </div>
+        <div class="hero-nums fade-in visible delay-4">
+          <div class="hero-num-item">
+            <div class="hero-num-val" data-count="42000">0</div>
+            <div class="hero-num-label">Students</div>
+          </div>
+          <div class="hero-num-item">
+            <div class="hero-num-val" data-count="3800">0</div>
+            <div class="hero-num-label">Faculty</div>
+          </div>
+          <div class="hero-num-item">
+            <div class="hero-num-val" data-count="130">0</div>
+            <div class="hero-num-label">Countries</div>
+          </div>
+          <div class="hero-num-item">
+            <div class="hero-num-val" data-count="14">0</div>
+            <div class="hero-num-label">Nobel Laureates</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <img class="hero-img-main" src="https://picsum.photos/seed/campus-students/600/750" alt="Students at Aethon University">
+        <div class="hero-img-card">
+          <div class="hero-card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div>
+            <div class="hero-card-val">98%</div>
+            <div class="hero-card-label">Graduate Employment Rate</div>
+          </div>
+        </div>
+        <div class="hero-rank-badge">QS Rank #7</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="about-strip">
+    <div class="strip-track">
+      <div class="strip-item"><i class="fas fa-award"></i> Excellence in Research</div>
+      <div class="strip-item"><i class="fas fa-globe"></i> 130+ Countries Represented</div>
+      <div class="strip-item"><i class="fas fa-flask"></i> $2.4B Research Funding</div>
+      <div class="strip-item"><i class="fas fa-university"></i> 18 Colleges & Schools</div>
+      <div class="strip-item"><i class="fas fa-book"></i> 4.2M Library Volumes</div>
+      <div class="strip-item"><i class="fas fa-trophy"></i> 14 Nobel Laureates</div>
+      <div class="strip-item"><i class="fas fa-microscope"></i> 200+ Research Centers</div>
+      <div class="strip-item"><i class="fas fa-handshake"></i> 500+ Industry Partners</div>
+      <!-- duplicate for seamless loop -->
+      <div class="strip-item"><i class="fas fa-award"></i> Excellence in Research</div>
+      <div class="strip-item"><i class="fas fa-globe"></i> 130+ Countries Represented</div>
+      <div class="strip-item"><i class="fas fa-flask"></i> $2.4B Research Funding</div>
+      <div class="strip-item"><i class="fas fa-university"></i> 18 Colleges & Schools</div>
+      <div class="strip-item"><i class="fas fa-book"></i> 4.2M Library Volumes</div>
+      <div class="strip-item"><i class="fas fa-trophy"></i> 14 Nobel Laureates</div>
+      <div class="strip-item"><i class="fas fa-microscope"></i> 200+ Research Centers</div>
+      <div class="strip-item"><i class="fas fa-handshake"></i> 500+ Industry Partners</div>
+    </div>
+  </div>
+
+  <!-- ACADEMICS PREVIEW -->
+  <section class="section">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:0;" class="fade-in">
+        <div class="section-label" style="justify-content:center;">Colleges & Schools</div>
+        <h2 class="section-title" style="margin-bottom:16px;">Academic <em>Excellence</em></h2>
+        <p class="section-body" style="margin:0 auto;text-align:center;">Six distinguished colleges offer programs at the forefront of human knowledge — from medicine and law to engineering and the arts.</p>
+      </div>
+      <div class="academics-grid fade-in">
+        <div class="acad-card" onclick="navigate('academics')">
+          <div class="acad-num">01</div>
+          <div class="acad-icon"><i class="fas fa-atom"></i></div>
+          <div class="acad-title">Sciences &<br>Engineering</div>
+          <div class="acad-desc">Pushing the boundaries of physics, chemistry, biology, and engineering through rigorous inquiry and hands-on research.</div>
+          <div class="acad-programs">
+            <span class="prog-tag">Physics</span><span class="prog-tag">Biomedical</span>
+            <span class="prog-tag">CS & AI</span><span class="prog-tag">Civil Eng.</span>
+          </div>
+          <span class="acad-link">Explore Programs <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="acad-card" onclick="navigate('academics')">
+          <div class="acad-num">02</div>
+          <div class="acad-icon"><i class="fas fa-balance-scale"></i></div>
+          <div class="acad-title">Law &<br>Governance</div>
+          <div class="acad-desc">One of the world's foremost law schools, producing graduates who shape policy, justice, and global institutions.</div>
+          <div class="acad-programs">
+            <span class="prog-tag">International Law</span><span class="prog-tag">Public Policy</span>
+            <span class="prog-tag">Human Rights</span>
+          </div>
+          <span class="acad-link">Explore Programs <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="acad-card" onclick="navigate('academics')">
+          <div class="acad-num">03</div>
+          <div class="acad-icon"><i class="fas fa-chart-network" style="--fa-family-sharp:true;"></i><i class="fas fa-chart-line"></i></div>
+          <div class="acad-title">Business &<br>Economics</div>
+          <div class="acad-desc">Cultivating analytical minds who understand markets, organizations, and the forces that shape the global economy.</div>
+          <div class="acad-programs">
+            <span class="prog-tag">MBA</span><span class="prog-tag">Finance</span>
+            <span class="prog-tag">Entrepreneurship</span><span class="prog-tag">Economics</span>
+          </div>
+          <span class="acad-link">Explore Programs <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="acad-card" onclick="navigate('academics')">
+          <div class="acad-num">04</div>
+          <div class="acad-icon"><i class="fas fa-heartbeat"></i></div>
+          <div class="acad-title">Medicine &<br>Health Sciences</div>
+          <div class="acad-desc">A century of medical breakthroughs built on compassion, precision, and a relentless commitment to human health.</div>
+          <div class="acad-programs">
+            <span class="prog-tag">Medicine MD</span><span class="prog-tag">Nursing</span>
+            <span class="prog-tag">Neuroscience</span>
+          </div>
+          <span class="acad-link">Explore Programs <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="acad-card" onclick="navigate('academics')">
+          <div class="acad-num">05</div>
+          <div class="acad-icon"><i class="fas fa-palette"></i></div>
+          <div class="acad-title">Arts &<br>Humanities</div>
+          <div class="acad-desc">Where human expression, history, philosophy, and culture come together to illuminate who we are and who we might become.</div>
+          <div class="acad-programs">
+            <span class="prog-tag">Philosophy</span><span class="prog-tag">History</span>
+            <span class="prog-tag">Fine Arts</span><span class="prog-tag">Literature</span>
+          </div>
+          <span class="acad-link">Explore Programs <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="acad-card" onclick="navigate('academics')">
+          <div class="acad-num">06</div>
+          <div class="acad-icon"><i class="fas fa-leaf"></i></div>
+          <div class="acad-title">Environmental &<br>Sustainability</div>
+          <div class="acad-desc">Addressing the planet's most urgent challenges through interdisciplinary research and actionable science.</div>
+          <div class="acad-programs">
+            <span class="prog-tag">Climate Science</span><span class="prog-tag">Ecology</span>
+            <span class="prog-tag">Urban Planning</span>
+          </div>
+          <span class="acad-link">Explore Programs <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="container">
+      <div class="stats-grid fade-in">
+        <div class="stat-cell">
+          <div class="stat-val" data-count="42000">0</div>
+          <div class="stat-label">Enrolled Students</div>
+          <div class="stat-desc">Across undergraduate, graduate and doctoral programs</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" data-count="200">0</div>
+          <div class="stat-label">Research Centers</div>
+          <div class="stat-desc">Spanning every field of human inquiry</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val">$2.4B</div>
+          <div class="stat-label">Annual Research Funding</div>
+          <div class="stat-desc">Among the top five globally funded universities</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" data-count="98">0</div>
+          <div class="stat-label">% Employment Rate</div>
+          <div class="stat-desc">Graduates placed within 6 months of completion</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <section class="section">
+    <div class="container">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;" class="fade-in">
+        <div>
+          <div class="section-label">Upcoming Events & News</div>
+          <h2 class="section-title" style="margin-bottom:0;">Life at <em>Aethon</em></h2>
+        </div>
+        <button class="btn-ghost" onclick="navigate('campus')">View All Events</button>
+      </div>
+      <div class="events-layout">
+        <div class="events-list fade-in">
+          <div class="event-item">
+            <div class="event-date"><div class="event-day">14</div><div class="event-month">Jun</div></div>
+            <div class="event-info">
+              <div class="event-type"><i class="fas fa-circle" style="font-size:5px;"></i> Lecture</div>
+              <div class="event-title">The Future of Artificial Intelligence in Healthcare</div>
+              <div class="event-meta"><span><i class="fas fa-map-marker-alt"></i> Grand Hall, North Campus</span><span><i class="far fa-clock"></i> 4:00 PM</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-date"><div class="event-day">19</div><div class="event-month">Jun</div></div>
+            <div class="event-info">
+              <div class="event-type"><i class="fas fa-circle" style="font-size:5px;"></i> Symposium</div>
+              <div class="event-title">International Climate Action Summit — Academic Edition</div>
+              <div class="event-meta"><span><i class="fas fa-map-marker-alt"></i> Aethon Conference Center</span><span><i class="far fa-clock"></i> All Day</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-date"><div class="event-day">25</div><div class="event-month">Jun</div></div>
+            <div class="event-info">
+              <div class="event-type"><i class="fas fa-circle" style="font-size:5px;"></i> Open Day</div>
+              <div class="event-title">Undergraduate Open Day — Class of 2026 Admissions</div>
+              <div class="event-meta"><span><i class="fas fa-map-marker-alt"></i> Main Campus</span><span><i class="far fa-clock"></i> 10:00 AM</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-date"><div class="event-day">02</div><div class="event-month">Jul</div></div>
+            <div class="event-info">
+              <div class="event-type"><i class="fas fa-circle" style="font-size:5px;"></i> Graduation</div>
+              <div class="event-title">Summer Commencement Ceremony 2025</div>
+              <div class="event-meta"><span><i class="fas fa-map-marker-alt"></i> Founder's Courtyard</span><span><i class="far fa-clock"></i> 3:00 PM</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="events-sidebar fade-in delay-2">
+          <div class="news-card" onclick="navigate('research')">
+            <div class="news-card-img"><img src="https://picsum.photos/seed/lab-research/600/360" alt="Research"></div>
+            <div class="news-card-body">
+              <div class="news-card-tag">Research Breakthrough</div>
+              <div class="news-card-title">Aethon Scientists Develop Novel Cancer Biomarker Detection</div>
+              <div class="news-card-date">June 8, 2025</div>
+            </div>
+          </div>
+          <div class="news-card" onclick="navigate('campus')">
+            <div class="news-card-img"><img src="https://picsum.photos/seed/campus-arch/600/360" alt="Campus"></div>
+            <div class="news-card-body">
+              <div class="news-card-tag">Campus</div>
+              <div class="news-card-title">New $400M Science & Innovation Complex to Open in 2026</div>
+              <div class="news-card-date">June 3, 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUS GALLERY -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="fade-in" style="text-align:center;margin-bottom:0;">
+        <div class="section-label" style="justify-content:center;">Our Campus</div>
+        <h2 class="section-title" style="margin-bottom:0;">A Place that <em>Inspires</em></h2>
+      </div>
+      <div class="campus-grid fade-in">
+        <div class="campus-img"><img src="https://picsum.photos/seed/campus-main/900/600" alt="Main Campus"><div class="campus-img-label">Main Campus — Founded 1892</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-library/600/400" alt="Library"><div class="campus-img-label">Whitmore Library</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-lab/600/400" alt="Laboratory"><div class="campus-img-label">Research Laboratories</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-students/600/400" alt="Students"><div class="campus-img-label">Student Commons</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-sport/600/400" alt="Athletics"><div class="campus-img-label">Athletics Complex</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials-section">
+    <div class="container">
+      <div style="text-align:center;" class="fade-in">
+        <div class="section-label" style="justify-content:center;">Alumni Voices</div>
+        <h2 class="section-title">Shaped by <em>Aethon</em></h2>
+      </div>
+      <div class="swiper testimonials-swiper fade-in">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide testimonial-slide">
+            <div class="quote-mark">"</div>
+            <div class="testimonial-text">"Aethon didn't just give me a degree — it gave me a language to think in. The professors here challenged every assumption I held and replaced them with something far more powerful: intellectual humility and rigour."</div>
+            <div class="testimonial-author">
+              <img class="testimonial-avatar" src="https://picsum.photos/seed/alum1/100/100" alt="Alumni">
+              <div><div class="testimonial-name">Dr. Elena Vasquez</div><div class="testimonial-role">Chief Research Officer, WHO — Class of 2009</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide testimonial-slide">
+            <div class="quote-mark">"</div>
+            <div class="testimonial-text">"The cross-disciplinary environment at Aethon is unlike anything else. I began as a law student and left as a legal technologist who went on to co-found a company that now serves 40 million users globally."</div>
+            <div class="testimonial-author">
+              <img class="testimonial-avatar" src="https://picsum.photos/seed/alum2/100/100" alt="Alumni">
+              <div><div class="testimonial-name">Marcus Chen</div><div class="testimonial-role">Co-Founder & CEO, LexAI — Class of 2014</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide testimonial-slide">
+            <div class="quote-mark">"</div>
+            <div class="testimonial-text">"Arriving from Lagos as a first-generation university student, I feared I'd never belong. Aethon showed me that great universities are built by people who were once outsiders — and that my perspective was a strength, not a deficit."</div>
+            <div class="testimonial-author">
+              <img class="testimonial-avatar" src="https://picsum.photos/seed/alum3/100/100" alt="Alumni">
+              <div><div class="testimonial-name">Amara Osei</div><div class="testimonial-role">UN Climate Envoy — Class of 2011</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination" style="margin-top:32px;position:relative;"></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+<!-- ══════════════════════════════════════
+     ACADEMICS PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-academics">
+  <div class="page-header">
+    <div class="page-header-num">02</div>
+    <div class="container page-header-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span><i class="fas fa-angle-right"></i><span>Academics</span></div>
+      <div class="section-label">Colleges & Schools</div>
+      <h1 class="hero-title">Academic <em>Programs</em></h1>
+      <p style="font-size:16px;color:var(--muted);max-width:600px;margin-top:20px;font-weight:300;line-height:1.8;">From foundational undergraduate degrees to cutting-edge doctoral research, Aethon's programs are designed to challenge, inspire, and equip graduates for lives of impact.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="academics-grid fade-in">
+        <div class="acad-card"><div class="acad-num">01</div><div class="acad-icon"><i class="fas fa-atom"></i></div><div class="acad-title">Sciences & Engineering</div><div class="acad-desc">World-leading programs across physics, chemistry, biology, computing, and all major engineering disciplines.</div><div class="acad-programs"><span class="prog-tag">BSc Physics</span><span class="prog-tag">MEng Biomedical</span><span class="prog-tag">PhD CS/AI</span><span class="prog-tag">Civil Engineering</span></div><span class="acad-link">View All Programs <i class="fas fa-arrow-right"></i></span></div>
+        <div class="acad-card"><div class="acad-num">02</div><div class="acad-icon"><i class="fas fa-balance-scale"></i></div><div class="acad-title">Law & Governance</div><div class="acad-desc">Shaping tomorrow's legal minds through rigorous scholarship and a globally connected network of practitioners.</div><div class="acad-programs"><span class="prog-tag">LLB</span><span class="prog-tag">LLM International</span><span class="prog-tag">Public Policy</span><span class="prog-tag">Human Rights</span></div><span class="acad-link">View All Programs <i class="fas fa-arrow-right"></i></span></div>
+        <div class="acad-card"><div class="acad-num">03</div><div class="acad-icon"><i class="fas fa-chart-line"></i></div><div class="acad-title">Business & Economics</div><div class="acad-desc">A triple-accredited business school producing analytical leaders who understand the future of global commerce.</div><div class="acad-programs"><span class="prog-tag">BSc Economics</span><span class="prog-tag">MBA</span><span class="prog-tag">MSc Finance</span><span class="prog-tag">Entrepreneurship</span></div><span class="acad-link">View All Programs <i class="fas fa-arrow-right"></i></span></div>
+        <div class="acad-card"><div class="acad-num">04</div><div class="acad-icon"><i class="fas fa-heartbeat"></i></div><div class="acad-title">Medicine & Health Sciences</div><div class="acad-desc">A century of medical education excellence, producing physicians, researchers, and public health leaders.</div><div class="acad-programs"><span class="prog-tag">MBBS</span><span class="prog-tag">BSc Nursing</span><span class="prog-tag">MSc Neuroscience</span><span class="prog-tag">Public Health</span></div><span class="acad-link">View All Programs <i class="fas fa-arrow-right"></i></span></div>
+        <div class="acad-card"><div class="acad-num">05</div><div class="acad-icon"><i class="fas fa-palette"></i></div><div class="acad-title">Arts & Humanities</div><div class="acad-desc">Where critical thinking meets creativity — exploring the ideas, histories, and stories that define human civilization.</div><div class="acad-programs"><span class="prog-tag">BA Philosophy</span><span class="prog-tag">MA History</span><span class="prog-tag">BFA Fine Arts</span><span class="prog-tag">Comparative Lit.</span></div><span class="acad-link">View All Programs <i class="fas fa-arrow-right"></i></span></div>
+        <div class="acad-card"><div class="acad-num">06</div><div class="acad-icon"><i class="fas fa-leaf"></i></div><div class="acad-title">Environmental Studies</div><div class="acad-desc">Interdisciplinary programs dedicated to understanding and solving the world's most urgent environmental challenges.</div><div class="acad-programs"><span class="prog-tag">BSc Climate Science</span><span class="prog-tag">MSc Ecology</span><span class="prog-tag">Urban Planning</span></div><span class="acad-link">View All Programs <i class="fas fa-arrow-right"></i></span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     RESEARCH PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-research">
+  <div class="page-header">
+    <div class="page-header-num">03</div>
+    <div class="container page-header-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span><i class="fas fa-angle-right"></i><span>Research</span></div>
+      <div class="section-label">Discovery & Innovation</div>
+      <h1 class="hero-title">Frontier <em>Research</em></h1>
+      <p style="font-size:16px;color:var(--muted);max-width:600px;margin-top:20px;font-weight:300;line-height:1.8;">With $2.4 billion in annual research funding and over 200 dedicated research centers, Aethon is where the world's most important questions find their answers.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="research-grid fade-in">
+        <div class="research-card"><div class="research-accent"></div><div class="research-label"><i class="fas fa-dna"></i> Biomedical Sciences</div><div class="research-title">Precision Medicine & Genomics Initiative</div><div class="research-desc">A flagship $340M program mapping the intersection of genetics, environment, and disease to develop personalised treatments for conditions once considered incurable.</div><div class="research-meta"><div class="r-meta-item"><span class="r-meta-val">$340M</span>Funding</div><div class="r-meta-item"><span class="r-meta-val">280</span>Researchers</div><div class="r-meta-item"><span class="r-meta-val">12</span>Clinical Trials</div></div></div>
+        <div class="research-card"><div class="research-accent"></div><div class="research-label"><i class="fas fa-robot"></i> Computer Science & AI</div><div class="research-title">Responsible AI & Machine Intelligence Lab</div><div class="research-desc">Developing AI systems that are not only powerful but transparent, fair, and aligned with human values — working with governments and industry to set global standards.</div><div class="research-meta"><div class="r-meta-item"><span class="r-meta-val">$180M</span>Funding</div><div class="r-meta-item"><span class="r-meta-val">150</span>Researchers</div><div class="r-meta-item"><span class="r-meta-val">45</span>Publications/yr</div></div></div>
+        <div class="research-card"><div class="research-accent"></div><div class="research-label"><i class="fas fa-solar-panel"></i> Environmental Sciences</div><div class="research-title">Global Climate Systems & Clean Energy</div><div class="research-desc">Multi-disciplinary teams modelling climate futures and developing breakthrough energy technologies — from next-generation solar to fusion energy prototypes.</div><div class="research-meta"><div class="r-meta-item"><span class="r-meta-val">$220M</span>Funding</div><div class="r-meta-item"><span class="r-meta-val">190</span>Researchers</div><div class="r-meta-item"><span class="r-meta-val">3</span>Patents Filed</div></div></div>
+        <div class="research-card"><div class="research-accent"></div><div class="research-label"><i class="fas fa-brain"></i> Neuroscience</div><div class="research-title">Human Cognition & Neural Mapping Center</div><div class="research-desc">Unlocking the mysteries of consciousness, memory, and neurological disease through advanced imaging, computational modelling, and clinical research.</div><div class="research-meta"><div class="r-meta-item"><span class="r-meta-val">$95M</span>Funding</div><div class="r-meta-item"><span class="r-meta-val">120</span>Researchers</div><div class="r-meta-item"><span class="r-meta-val">8</span>Brain Banks</div></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     CAMPUS LIFE PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-campus">
+  <div class="page-header">
+    <div class="page-header-num">04</div>
+    <div class="container page-header-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span><i class="fas fa-angle-right"></i><span>Campus Life</span></div>
+      <div class="section-label">Student Experience</div>
+      <h1 class="hero-title">Life at <em>Aethon</em></h1>
+      <p style="font-size:16px;color:var(--muted);max-width:600px;margin-top:20px;font-weight:300;line-height:1.8;">Beyond the lecture hall, Aethon offers a vibrant community of 200+ student clubs, world-class athletic facilities, cultural events, and the kind of friendships that last a lifetime.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="campus-grid fade-in" style="margin-top:0;">
+        <div class="campus-img"><img src="https://picsum.photos/seed/campus-quad/900/600" alt="Quad"><div class="campus-img-label">The Great Quad</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-dorm/600/400" alt="Residence"><div class="campus-img-label">Student Residences</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-cafe/600/400" alt="Café"><div class="campus-img-label">The Faculty Café</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-sport2/600/400" alt="Sport"><div class="campus-img-label">Aethon Athletic Center</div></div>
+        <div class="campus-img"><img src="https://picsum.photos/seed/uni-theatre/600/400" alt="Theatre"><div class="campus-img-label">Blackwood Theatre</div></div>
+      </div>
+      <div style="margin-top:80px;">
+        <div class="section-label" style="text-align:center;justify-content:center;" class="fade-in">Faculty Spotlight</div>
+        <h2 class="section-title fade-in" style="text-align:center;margin-bottom:0;">Meet Our <em>Faculty</em></h2>
+        <div class="faculty-grid fade-in" style="margin-top:48px;">
+          <div class="faculty-card"><img src="https://picsum.photos/seed/prof1/400/500" alt="Professor"><div class="faculty-overlay"><div class="faculty-dept">Sciences & Engineering</div><div class="faculty-name">Prof. James<br>Whitfield</div><div class="faculty-role">Chair of Theoretical Physics</div><div class="faculty-tags"><span class="faculty-tag">Quantum</span><span class="faculty-tag">Nobel 2018</span></div></div></div>
+          <div class="faculty-card"><img src="https://picsum.photos/seed/prof2/400/500" alt="Professor"><div class="faculty-overlay"><div class="faculty-dept">Medicine</div><div class="faculty-name">Dr. Amara<br>Diallo</div><div class="faculty-role">Professor of Oncology</div><div class="faculty-tags"><span class="faculty-tag">Genomics</span><span class="faculty-tag">Cancer</span></div></div></div>
+          <div class="faculty-card"><img src="https://picsum.photos/seed/prof3/400/500" alt="Professor"><div class="faculty-overlay"><div class="faculty-dept">Law & Governance</div><div class="faculty-name">Prof. Yuki<br>Tanaka</div><div class="faculty-role">International Law</div><div class="faculty-tags"><span class="faculty-tag">UN Advisor</span><span class="faculty-tag">Treaties</span></div></div></div>
+          <div class="faculty-card"><img src="https://picsum.photos/seed/prof4/400/500" alt="Professor"><div class="faculty-overlay"><div class="faculty-dept">Computer Science</div><div class="faculty-name">Prof. Sofia<br>Marchetti</div><div class="faculty-role">Director, AI Research Lab</div><div class="faculty-tags"><span class="faculty-tag">Deep Learning</span><span class="faculty-tag">Ethics</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     ADMISSIONS PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-admissions">
+  <div class="page-header">
+    <div class="page-header-num">05</div>
+    <div class="container page-header-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span><i class="fas fa-angle-right"></i><span>Admissions</span></div>
+      <div class="section-label">Join Aethon</div>
+      <h1 class="hero-title">Begin Your <em>Journey</em></h1>
+      <p style="font-size:16px;color:var(--muted);max-width:600px;margin-top:20px;font-weight:300;line-height:1.8;">We welcome exceptional minds from every background. Applications for the 2026 intake are now open — and we'd love to hear your story.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="admissions-layout fade-in">
+        <div class="admissions-info">
+          <h2>Why Choose <em>Aethon?</em></h2>
+          <p>Aethon consistently ranks among the world's top ten universities because we do something few institutions dare: we treat students as partners in knowledge, not recipients of it. Here you'll work alongside Nobel laureates, build companies, change policy, and discover who you truly are.</p>
+          <div class="admissions-steps">
+            <div class="adm-step"><div class="adm-step-num">1</div><div><div class="adm-step-title">Submit Your Application</div><div class="adm-step-desc">Complete the online form including transcripts, personal statement, and references.</div></div></div>
+            <div class="adm-step"><div class="adm-step-num">2</div><div><div class="adm-step-title">Academic Review</div><div class="adm-step-desc">Our admissions team assesses your academic background, achievements, and potential.</div></div></div>
+            <div class="adm-step"><div class="adm-step-num">3</div><div><div class="adm-step-title">Interview</div><div class="adm-step-desc">Shortlisted applicants are invited for an interview — in-person or online.</div></div></div>
+            <div class="adm-step"><div class="adm-step-num">4</div><div><div class="adm-step-title">Decision & Offer</div><div class="adm-step-desc">Successful applicants receive a formal offer of admission within 4 weeks.</div></div></div>
+          </div>
+        </div>
+        <div class="admissions-form">
+          <div id="adm-form-container">
+            <h3>Start Your Application</h3>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" placeholder="Eleanor"></div>
+              <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" placeholder="Whitmore"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" placeholder="you@example.com"></div>
+            <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" placeholder="+1 (555) 000-0000"></div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">College / Program</label>
+                <select class="form-input form-select"><option value="">Select a program</option><option>Sciences & Engineering</option><option>Law & Governance</option><option>Business & Economics</option><option>Medicine & Health Sciences</option><option>Arts & Humanities</option><option>Environmental Studies</option></select>
+              </div>
+              <div class="form-group"><label class="form-label">Study Level</label>
+                <select class="form-input form-select"><option value="">Select level</option><option>Undergraduate</option><option>Postgraduate</option><option>Doctoral (PhD)</option></select>
+              </div>
+            </div>
+            <div class="form-group"><label class="form-label">Personal Statement (Optional)</label><textarea class="form-input" rows="4" placeholder="Tell us about your academic interests and ambitions..." style="resize:vertical;"></textarea></div>
+            <button class="btn-form" onclick="submitForm()"><i class="fas fa-paper-plane"></i> &nbsp;Submit Application</button>
+          </div>
+          <div class="form-success" id="form-success">
+            <div class="form-success-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Application Received</h3>
+            <p>Thank you for applying to Aethon University. Our admissions team will review your application and be in touch within 5 business days.</p>
+            <button class="btn-ghost" style="margin-top:24px;" onclick="navigate('home')">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     ABOUT PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="page-header">
+    <div class="page-header-num">01</div>
+    <div class="container page-header-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span><i class="fas fa-angle-right"></i><span>About</span></div>
+      <div class="section-label">Our Story</div>
+      <h1 class="hero-title">Since <em>1892</em></h1>
+      <p style="font-size:16px;color:var(--muted);max-width:600px;margin-top:20px;font-weight:300;line-height:1.8;">Founded by industrialist and philanthropist Aldous Aethon, the university was established with a radical belief: that great education is not a privilege — it is the engine of human progress.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="fade-in">
+        <div>
+          <div class="section-label">Our Mission</div>
+          <h2 class="section-title">To advance <em>knowledge</em> for the benefit of humanity</h2>
+          <p style="font-size:15px;color:var(--muted);line-height:1.9;margin-bottom:20px;font-weight:300;">Over 130 years, Aethon has been shaped by the belief that a great university must do three things: teach rigorously, research fearlessly, and engage the world honestly. These principles remain unchanged.</p>
+          <p style="font-size:15px;color:var(--muted);line-height:1.9;font-weight:300;">Today, our 350,000 living alumni lead governments, institutions, companies, and movements on every continent — living proof that an Aethon education is a force multiplier for whatever good you wish to do in the world.</p>
+          <div style="display:flex;gap:24px;margin-top:40px;flex-wrap:wrap;">
+            <div style="text-align:center;border:1px solid var(--border);padding:24px 32px;border-radius:var(--r2);"><div style="font-family:var(--font-display);font-size:40px;font-weight:600;color:var(--gold2);">350K</div><div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;">Living Alumni</div></div>
+            <div style="text-align:center;border:1px solid var(--border);padding:24px 32px;border-radius:var(--r2);"><div style="font-family:var(--font-display);font-size:40px;font-weight:600;color:var(--gold2);">14</div><div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;">Nobel Prizes</div></div>
+            <div style="text-align:center;border:1px solid var(--border);padding:24px 32px;border-radius:var(--r2);"><div style="font-family:var(--font-display);font-size:40px;font-weight:600;color:var(--gold2);">133</div><div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;">Years Strong</div></div>
+          </div>
+        </div>
+        <div style="border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow2);">
+          <img src="https://picsum.photos/seed/uni-heritage/700/500" alt="University Heritage" style="width:100%;filter:grayscale(20%) brightness(0.8);">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">Aethon <em>University</em></div>
+        <div class="footer-tagline">"The purpose of the university is to make sons of farmers into sons of knowledge." — Aldous Aethon, 1892</div>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Academics</h5>
+        <div class="footer-links">
+          <a onclick="navigate('academics')">Sciences & Engineering</a>
+          <a onclick="navigate('academics')">Law & Governance</a>
+          <a onclick="navigate('academics')">Business & Economics</a>
+          <a onclick="navigate('academics')">Medicine</a>
+          <a onclick="navigate('academics')">Arts & Humanities</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>University</h5>
+        <div class="footer-links">
+          <a onclick="navigate('about')">About Aethon</a>
+          <a onclick="navigate('research')">Research</a>
+          <a onclick="navigate('campus')">Campus Life</a>
+          <a onclick="navigate('admissions')">Admissions</a>
+          <a href="#">Libraries</a>
+          <a href="#">Alumni</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <div style="font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:10px;font-weight:300;">
+          <div style="display:flex;align-items:flex-start;gap:10px;"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i><span>Aethon Park, Cambridge, CB2 1TN, United Kingdom</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><i class="fas fa-phone" style="color:var(--gold);flex-shrink:0;"></i><span>+44 (0)1223 000 000</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><i class="fas fa-envelope" style="color:var(--gold);flex-shrink:0;"></i><span>info@aethon.ac.uk</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Aethon University. All rights reserved.</span>
+      <div class="footer-accreditations">
+        <span class="accred-badge">QS #7</span>
+        <span class="accred-badge">THE Top 10</span>
+        <span class="accred-badge">AACSB</span>
+        <span class="accred-badge">EQUIS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+<!-- ══════════════ SWIPER ══════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+// ════════════════ CURSOR ════════════════
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('button,[onclick],a,.nav-link,.mobile-link,.footer-links a').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('active');ring.classList.add('active')});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('active');ring.classList.remove('active')});
+});
+
+// ════════════════ NAVIGATION ════════════════
+const pages = ['home','academics','research','campus','admissions','about'];
+function navigate(page){
+  pages.forEach(p=>{
+    const el=document.getElementById('page-'+p);
+    if(el) el.classList.remove('active');
+    const nav=document.getElementById('nav-'+p);
+    if(nav) nav.classList.remove('active');
+  });
+  const target=document.getElementById('page-'+page);
+  if(target){target.classList.add('active');}
+  const navEl=document.getElementById('nav-'+page);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initAnimations,100);
+}
+
+// ════════════════ SCROLL ANIMATIONS ════════════════
+function initAnimations(){
+  const els=document.querySelectorAll('.fade-in,.slide-left,.slide-right');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+  },{threshold:0.1});
+  els.forEach(el=>io.observe(el));
+}
+initAnimations();
+
+// ════════════════ SCROLL EVENTS ════════════════
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY;
+  document.getElementById('navbar').classList.toggle('scrolled',s>60);
+  document.getElementById('back-top').classList.toggle('show',s>400);
+  // progress
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('progress').style.width=(h>0?s/h*100:0)+'%';
+  // count
+  document.querySelectorAll('.stat-val[data-count],.hero-num-val[data-count]').forEach(el=>{
+    if(!el.dataset.animated && el.getBoundingClientRect().top<window.innerHeight){
+      el.dataset.animated='1';
+      animCount(el,+el.dataset.count);
+    }
+  });
+},{passive:true});
+
+// ════════════════ COUNTER ════════════════
+function animCount(el,target){
+  const dur=2200,fps=16;
+  let cur=0;
+  const step=target/(dur/fps);
+  const t=setInterval(()=>{
+    cur=Math.min(cur+step,target);
+    const v=Math.floor(cur);
+    el.textContent=v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?v.toLocaleString():v.toString();
+    if(cur>=target) clearInterval(t);
+  },fps);
+}
+
+// ════════════════ THEME ════════════════
+function toggleTheme(){
+  const html=document.documentElement;
+  const dark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',dark?'light':'dark');
+  document.getElementById('theme-icon').className=dark?'fas fa-moon':'fas fa-circle-half-stroke';
+  localStorage.setItem('uni-theme',dark?'light':'dark');
+}
+const savedTheme=localStorage.getItem('uni-theme');
+if(savedTheme){
+  document.documentElement.setAttribute('data-theme',savedTheme);
+  if(savedTheme==='light') document.getElementById('theme-icon').className='fas fa-moon';
+}
+
+// ════════════════ MOBILE DRAWER ════════════════
+function toggleDrawer(){
+  document.getElementById('mob-drawer').classList.toggle('open');
+  document.getElementById('mob-overlay').classList.toggle('show');
+  document.getElementById('ham').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mob-drawer').classList.contains('open')?'hidden':'';
+}
+
+// ════════════════ FORM SUBMIT ════════════════
+function submitForm(){
+  const inputs=document.querySelectorAll('#adm-form-container .form-input');
+  let valid=true;
+  inputs.forEach(i=>{if(i.type!=='submit'&&!i.value.trim()&&i.type!=='textarea'){valid=false;i.style.borderColor='#c0392b';}else{i.style.borderColor=''}});
+  if(!valid){alert('Please fill in all required fields.');return;}
+  document.getElementById('adm-form-container').style.display='none';
+  document.getElementById('form-success').classList.add('show');
+}
+
+// ════════════════ TESTIMONIAL SWIPER ════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  new Swiper('.testimonials-swiper',{
+    slidesPerView:1,
+    spaceBetween:32,
+    loop:true,
+    autoplay:{delay:6000,disableOnInteraction:false},
+    pagination:{el:'.testimonials-swiper .swiper-pagination',clickable:true},
+    breakpoints:{900:{slidesPerView:2}}
+  });
+  // trigger counters on load for hero
+  setTimeout(()=>{
+    document.querySelectorAll('.hero-num-val[data-count]').forEach(el=>{
+      if(!el.dataset.animated){el.dataset.animated='1';animCount(el,+el.dataset.count);}
+    });
+  },600);
+});
+</script>
+</body>
+</html>
